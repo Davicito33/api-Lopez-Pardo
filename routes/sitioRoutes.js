@@ -53,6 +53,26 @@ router.get("/:id", async (req, res) => {
 
 });
 
+router.get('/:id', async (req, res) => {
+
+    try {
+
+        const sitio = await Sitio.findById(
+            req.params.id
+        );
+
+        res.json(sitio);
+
+    } catch (error) {
+
+        res.status(500).json({
+            mensaje: 'Error al obtener sitio'
+        });
+
+    }
+
+});
+
 router.put("/:id", async (req, res) => {
 
   try {
@@ -92,3 +112,47 @@ router.delete("/:id", async (req, res) => {
 });
 
 module.exports = router;
+
+router.delete('/:id', async (req, res) => {
+
+    try {
+
+        await Sitio.findByIdAndDelete(req.params.id);
+
+        res.json({
+            mensaje: 'Sitio eliminado'
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            mensaje: 'Error al eliminar'
+        });
+
+    }
+
+});
+
+router.put('/:id', async (req, res) => {
+
+    try {
+
+        const sitioActualizado = await Sitio.findByIdAndUpdate(
+
+            req.params.id,
+            req.body,
+            { new: true }
+
+        );
+
+        res.json(sitioActualizado);
+
+    } catch (error) {
+
+        res.status(500).json({
+            mensaje: 'Error al actualizar'
+        });
+
+    }
+
+});
